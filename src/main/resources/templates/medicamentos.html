@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="es" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Medicamentos</title>
+
+    <!-- Bootstrap -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css">
+
+    <!-- jQuery -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.min.js"></script>
+    <!-- Sweet Alert -->
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+</head>
+<body>
+<div class="container mt-4">
+    <h1>Medicamentos</h1>
+
+    <table class="table table-striped">
+        <thead>
+        <tr>
+            <th>Id</th>
+            <th>Nombre</th>
+            <th>Descripción</th>
+            <th>Categoría</th>
+            <th>Precio</th>
+            <th>Stock</th>
+            <th>Fecha de Vencimiento</th>
+            <th>Proveedor</th>
+            <th>Acciones</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="medicamento : ${medicamentos}">
+            <td th:text="${medicamento.id}"></td>
+            <td th:text="${medicamento.nombre}"></td>
+            <td th:text="${medicamento.descripcion}"></td>
+            <td th:text="${medicamento.categoria}"></td>
+            <td th:text="${medicamento.precio}"></td>
+            <td th:text="${medicamento.stock}"></td>
+            <td th:text="${#dates.format(medicamento.fecvence, 'dd-MM-yyyy')}"></td>
+            <td th:text="${medicamento.proveedor}"></td>
+
+            <td>
+                <a th:href="@{/medicamentos/edit/{id}(id=${medicamento.id})}"
+                   class="btn btn-outline-primary btn-sm">Editar</a>
+                <!--a th:href="@{/medicamentos/delete/{id}(id=${medicamento.id})}"
+                   class="btn btn-danger btn-sm">Eliminar</a-->
+                <a class="btn btn-outline-danger btn-sm"
+                        th:onclick="'javascript:confirmDelete(\'' + ${medicamento.id} + '\');'">Eliminar</a>
+
+            </td>
+        </tr>
+        </tbody>
+    </table>
+    <div class="text-center">
+        <a th:href="@{/medicamentos/new}" class="btn btn-outline-success m-4">Nuevo Registro</a>
+    </div>
+</div>
+
+<script>
+    function confirmDelete(id) {
+        swal({
+            title: "¿Estás seguro?",
+            text: "Una vez eliminado, no podrás recuperar este registro.",
+            icon: "warning",
+            buttons: true,
+            dangerMode: true,
+        })
+            .then((willDelete) => {
+                if (willDelete) {
+                    // Si el usuario confirma, redirige a la URL de eliminación
+                    window.location.href = "/medicamentos/delete/" + id;
+                } else {
+                    swal("El registro no ha sido eliminado.");
+                }
+            });
+    }
+</script>
+
+</body>
+</html>
