@@ -39,6 +39,10 @@
             <label for="fecvence">Fecha de Vencimiento:</label>
             <input type="date" class="form-control" id="fecvence" th:field="*{medicamento.fecvence}" required>
         </div>
+        <div class="form-group">
+            <label for="proveedor">Proveedor:</label>
+            <input type="text" class="form-control" id="proveedor" th:field="*{medicamento.proveedor}" required>
+        </div>
         <div class="text-center">
             <!--button type="submit" class="btn btn-outline-primary">Guardar Cambios</button-->
             <button type="button" class="btn btn-outline-primary m-4" onclick="showConfirmation()">Guardar Cambios</button>
